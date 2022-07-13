@@ -381,16 +381,20 @@ The visual selection (line-wise) will be taken as stdin.
 
 ## Advanced Topics
 
-AsyncRun provides enough flexibility and possibility to customize various details of how to run a command.
 
 ### Extra Runners
 
-Besides the default quickfix and internal terminal mechanism, the user-defined runners allow you to run commands in any way you want. eg. in a new gnome-terminal window/tab, a floaterm window, or a side-by-side tmux split.
+Besides the default quickfix and
+    internal terminal mechanism,
+the user-defined runners allow you to run commands in any way you want.
+    eg. in a new gnome-terminal window/tab,
+    a floaterm window,
+    or a side-by-side tmux split.
 
 By default, AsyncRun is shipped with some popular runners:
 
 | Runner | Description | Requirement | Link |
-|-|-|-|-|
+| -|-|-|-|
 | `gnome` | run in a new gnome terminal | GNOME | [gnome.vim](autoload/asyncrun/runner/gnome.vim) |
 | `gnome_tab` | run in a new gnome terminal tab | GNOME | [gnome_tab.vim](autoload/asyncrun/runner/gnome_tab.vim) |
 | `xterm` | run in a xterm window | xterm | [xterm.vim](autoload/asyncrun/runner/xterm.vim) |
@@ -427,15 +431,17 @@ All runners are customizable, you can modify or define your own runners, see the
 
 ### Customize Runner
 
-User-defined runners allow you to specify how the command will run by creating a new runner. It can be useful when you want your commands run in a tmux split or a new gnome-terminal window:
-
+User-defined runners allow you to specify how the command will run by
+    creating a new runner.
+It can be useful when you want your commands run in a tmux split or
+a new gnome-terminal window: 
 ```VimL
-function! MyRunner(opts)
-    echo "command to run is: " . a:opts.cmd
-endfunction
+    function! MyRunner(opts)
+        echo "command to run is: " . a:opts.cmd
+    endfunction
 
-let g:asyncrun_runner = get(g:, 'asyncrun_runner', {})
-let g:asyncrun_runner.test = function('MyRunner')
+    let g:asyncrun_runner = get(g:, 'asyncrun_runner', {})
+    let g:asyncrun_runner.test = function('MyRunner')
 ```
 
 Then try:
@@ -477,13 +483,7 @@ c:\windows\sysnative\wsl.exe ls
 ```
 
 And replace any thing like `$(WSL_FILENAME)` and `$(WSL_FILEPATH)` in your command.
-
-
-### Requirements
-
-Vim 7.4.1829 is minimal version to support async mode. If you are use older versions, `g:asyncrun_mode` will fall back from `0/async` to `1/sync`. NeoVim 0.1.4 or later is also supported. 
-
-Recommend to use Vim 8.0 or later. 
+ 
 
 ### Cooperate with vim-fugitive:
 
