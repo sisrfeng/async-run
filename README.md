@@ -194,7 +194,8 @@ There can be some options before your `[cmd]`:
 | `-post=?` | `unset` | vimscript to exec after job finished, spaces **must** be escaped to '\ ' |
 | `-auto=?` | `unset` | event name to trigger `QuickFixCmdPre`/`QuickFixCmdPost` [name] autocmd. |
 | `-raw` | `unset` | use raw output if present, and `&errorformat` will be ignored. |
-| `-strip` | `unset` | remove the heading/trailing messages if it is present (omit command and "[Finished in ...]" message). |
+| `-strip` | `unset` | remove the heading/trailing messages if it is present
+                        (omit command and "[Finished in ...]" message). |
 | `-errorformat=?` | `unset` | errorformat for error matching, if it is unprovided, use current `&errorformat` value. Beware that `%` needs to be escaped into `\%`. |
 | `-silent` | `unset` | provide `-silent` to prevent open quickfix window (will override `g:asyncrun_open` temporarily) |
 | `-scroll=?` | `unset` | set to `0` to prevent quickfix auto-scrolling |

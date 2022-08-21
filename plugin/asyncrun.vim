@@ -9,8 +9,10 @@
 "     :AsyncRun[!] [options] {cmd} ...
 "
 "     when "!" is included, auto-scroll in quickfix will be disabled
-"     parameters are splited by space, if a parameter contains space,
-"     it should be quoted or escaped as backslash + space (unix only).
+
+"     parameters are splited by space,
+"     if a parameter contains space,
+	"     it should be quoted or escaped as backslash + space (unix only).
 "
 " Parameters will be expanded if they start with '%', '#' or '<' :
 "     %:p     - File name of current buffer with full path
@@ -360,7 +362,7 @@ fun! s:AppendText(textlist, raw)
 	if qfid < 0
 		if a:raw == 0
 			if and(g:asyncrun_skip, 1) == 0
-				caddexpr a:textlist
+						  caddexpr a:textlist
 			el
 				noautocmd caddexpr a:textlist
 			en
@@ -370,7 +372,7 @@ fun! s:AppendText(textlist, raw)
 				let items += [{'text': text}]
 			endfor
 			if and(g:asyncrun_skip, 1) == 0
-				call setqflist(items, 'a')
+							  call setqflist(items, 'a')
 			el
 				noautocmd call setqflist(items, 'a')
 			en
@@ -974,22 +976,22 @@ fun! s:ExtractOpt(command)
 	endwhile
 	let cmd = substitute(cmd, '^\s*\(.\{-}\)\s*$', '\1', '')
 	let cmd = substitute(cmd, '^@\s*', '', '')
-	let opts.cwd = get(opts, 'cwd', '')
-	let opts.mode = get(opts, 'mode', '')
-	let opts.save = get(opts, 'save', '')
-	let opts.program = get(opts, 'program', '')
-	let opts.post = get(opts, 'post', '')
-	let opts.text = get(opts, 'text', '')
-	let opts.auto = get(opts, 'auto', '')
-	let opts.raw = get(opts, 'raw', '')
-	let opts.strip = get(opts, 'strip', '')
-	let opts.append = get(opts, 'append', '')
+	let opts.cwd     = get(opts, 'cwd'     , '')
+	let opts.mode    = get(opts, 'mode'    , '')
+	let opts.save    = get(opts, 'save'    , '')
+	let opts.program = get(opts, 'program' , '')
+	let opts.post    = get(opts, 'post'    , '')
+	let opts.text    = get(opts, 'text'    , '')
+	let opts.auto    = get(opts, 'auto'    , '')
+	let opts.raw     = get(opts, 'raw'     , '')
+	let opts.strip   = get(opts, 'strip'   , '')
+	let opts.append  = get(opts, 'append'  , '')
 	if 0
-		echom 'cwd:'. opts.cwd
-		echom 'mode:'. opts.mode
-		echom 'save:'. opts.save
-		echom 'program:'. opts.program
-		echom 'command:'. cmd
+		echom 'cwd:' . opts.cwd
+		echom 'mode:' . opts.mode
+		echom 'save:' . opts.save
+		echom 'program:' . opts.program
+		echom 'command:' . cmd
 	en
 	return [cmd, opts]
 endfunc
@@ -1573,8 +1575,18 @@ fun! s:run(opts)
 	en
 
 	" mode alias
-	let l:modemap = {'async':0, 'make':1, 'bang':2, 'python':3, 'os':4,
-				\ 'hide':5, 'terminal': 6, 'execute':1, 'term':6, 'system':4}
+	let l:modemap = {
+		\ 'async'    : 0,
+		\ 'make'     : 1,
+		\ 'bang'     : 2,
+		\ 'python'   : 3,
+		\ 'os'       : 4,
+		\ 'hide'     : 5,
+		\ 'terminal' : 6,
+		\ 'execute'  : 1,
+		\ 'term'     : 6,
+		\ 'system'   : 4,
+ 	\ }
 
 	let l:modemap['external'] = 4
 	let l:modemap['quickfix'] = 0
@@ -1733,19 +1745,19 @@ fun! s:run(opts)
 	en
 
 	if l:mode == 0 && s:asyncrun_support != 0
-		let s:async_info.postsave = opts.post
-		let s:async_info.autosave = opts.auto
-		let s:async_info.text = opts.text
-		let s:async_info.raw = opts.raw
-		let s:async_info.range = opts.range
+		let s:async_info.postsave  = opts.post
+		let s:async_info.autosave  = opts.auto
+		let s:async_info.text      = opts.text
+		let s:async_info.raw       = opts.raw
+		let s:async_info.range     = opts.range
 		let s:async_info.range_top = opts.range_top
 		let s:async_info.range_bot = opts.range_bot
 		let s:async_info.range_buf = opts.range_buf
-		let s:async_info.strip = opts.strip
-		let s:async_info.append = opts.append
-		let s:async_info.cwd = getcwd()
-		let s:async_info.once = get(opts, 'once', 0)
-		let s:async_info.encoding = get(opts, 'encoding', g:asyncrun_encs)
+		let s:async_info.strip     = opts.strip
+		let s:async_info.append    = opts.append
+		let s:async_info.cwd       = getcwd()
+		let s:async_info.once      = get(opts, 'once'     , 0)
+		let s:async_info.encoding  = get(opts, 'encoding' , g:asyncrun_encs)
 		if s:AsyncRun_Job_Start(l:command) != 0
 			call s:AutoCmd('Error')
 		en
@@ -1900,37 +1912,34 @@ fun! s:run(opts)
 endfunc
 
 
-"----------------------------------------------------------------------
-" asyncrun - run
-"----------------------------------------------------------------------
 fun! asyncrun#run(bang, opts, args, ...)
 	let l:macros = {}
-	let l:macros['VIM_FILEPATH'] = expand("%:p")
-	let l:macros['VIM_FILENAME'] = expand("%:t")
-	let l:macros['VIM_FILEDIR'] = expand("%:p:h")
+	let l:macros['VIM_FILEPATH']  = expand("%:p")
+	let l:macros['VIM_FILENAME']  = expand("%:t")
+	let l:macros['VIM_FILEDIR']   = expand("%:p:h")
 	let l:macros['VIM_FILENOEXT'] = expand("%:t:r")
 	let l:macros['VIM_PATHNOEXT'] = expand("%:p:r")
-	let l:macros['VIM_FILEEXT'] = "." . expand("%:e")
-	let l:macros['VIM_FILETYPE'] = (&filetype)
-	let l:macros['VIM_CWD'] = getcwd()
-	let l:macros['VIM_RELDIR'] = expand("%:h:.")
-	let l:macros['VIM_RELNAME'] = expand("%:p:.")
-	let l:macros['VIM_CWORD'] = expand("<cword>")
-	let l:macros['VIM_CFILE'] = expand("<cfile>")
-	let l:macros['VIM_CLINE'] = line('.')
-	let l:macros['VIM_VERSION'] = ''.v:version
-	let l:macros['VIM_SVRNAME'] = v:servername
-	let l:macros['VIM_COLUMNS'] = ''.&columns
-	let l:macros['VIM_LINES'] = ''.&lines
-	let l:macros['VIM_GUI'] = has('gui_running')? 1 : 0
-	let l:macros['VIM_ROOT'] = asyncrun#get_root('%')
-	let l:macros['VIM_HOME'] = expand(split(&rtp, ',')[0])
-	let l:macros['VIM_PRONAME'] = fnamemodify(l:macros['VIM_ROOT'], ':t')
-	let l:macros['VIM_DIRNAME'] = fnamemodify(l:macros['VIM_CWD'], ':t')
-	let l:macros['VIM_PWD'] = l:macros['VIM_CWD']
-	let l:macros['<cwd>'] = l:macros['VIM_CWD']
-	let l:macros['<root>'] = l:macros['VIM_ROOT']
-	let l:macros['<pwd>'] = l:macros['VIM_PWD']
+	let l:macros['VIM_FILEEXT']   = "." . expand("%:e")
+	let l:macros['VIM_FILETYPE']  = (&filetype)
+	let l:macros['VIM_CWD']       = getcwd()
+	let l:macros['VIM_RELDIR']    = expand("%:h:.")
+	let l:macros['VIM_RELNAME']   = expand("%:p:.")
+	let l:macros['VIM_CWORD']     = expand("<cword>")
+	let l:macros['VIM_CFILE']     = expand("<cfile>")
+	let l:macros['VIM_CLINE']     = line('.')
+	let l:macros['VIM_VERSION']   = ''.v:version
+	let l:macros['VIM_SVRNAME']   = v:servername
+	let l:macros['VIM_COLUMNS']   = ''.&columns
+	let l:macros['VIM_LINES']     = ''.&lines
+	let l:macros['VIM_GUI']       = has('gui_running')? 1 : 0
+	let l:macros['VIM_ROOT']      = asyncrun#get_root('%')
+	let l:macros['VIM_HOME']      = expand(split(&rtp, ',')[0])
+	let l:macros['VIM_PRONAME']   = fnamemodify(l:macros['VIM_ROOT'], ':t')
+	let l:macros['VIM_DIRNAME']   = fnamemodify(l:macros['VIM_CWD'], ':t')
+	let l:macros['VIM_PWD']       = l:macros['VIM_CWD']
+	let l:macros['<cwd>']         = l:macros['VIM_CWD']
+	let l:macros['<root>']        = l:macros['VIM_ROOT']
+	let l:macros['<pwd>']         = l:macros['VIM_PWD']
 	let l:retval = ''
 
 	" handle: empty extension
@@ -2032,11 +2041,15 @@ fun! asyncrun#run(bang, opts, args, ...)
 	let l:opts.macros = l:macros
 	let l:opts.mode = get(l:opts, 'mode', g:asyncrun_mode)
 	let l:opts.errorformat = get(l:opts, 'errorformat', &errorformat)
-	let s:async_scroll = (a:bang == '!')? 0 : 1
+	let s:async_scroll = (a:bang == '!')
+						\ ? 0
+						\ : 1
 
 	" check scroll
 	if has_key(l:opts, 'scroll')
-		let s:async_scroll = (l:opts.scroll == '0')? 0 : 1
+		let s:async_scroll = (l:opts.scroll == '0')
+								\ ? 0
+								\ : 1
 	en
 
 	" check if need to save
@@ -2086,26 +2099,23 @@ endfunc
 
 
 
-"----------------------------------------------------------------------
-" asyncrun - version
-"----------------------------------------------------------------------
 fun! asyncrun#version()
 	return '2.9.11'
 endfunc
 
 
-"----------------------------------------------------------------------
 " Commands
-"----------------------------------------------------------------------
-com!  -bang -nargs=+ -range=0 -complete=file AsyncRun
-		\ call asyncrun#run('<bang>', '', <q-args>, <count>, <line1>, <line2>)
+	com!  -bang -nargs=+  -range=0 -complete=file
+			\ AsyncRun
+			\ call asyncrun#run('<bang>', '', <q-args>, <count>, <line1>, <line2>)
+                "\ fun! asyncrun#run(bang, opts, args, ...)
 
-com!  -bar -bang -nargs=0 AsyncStop call asyncrun#stop('<bang>')
+	com!  -bar -bang -nargs=0
+			\ AsyncStop
+			\ call asyncrun#stop('<bang>')
 
 
-"----------------------------------------------------------------------
 " run command in msys
-"----------------------------------------------------------------------
 fun! s:program_msys(opts)
 	let tmpname = fnamemodify(tempname(), ':h') . '\asyncruz.cmd'
 	let script = fnamemodify(tempname(), ':h') . '\asyncrun.sh'

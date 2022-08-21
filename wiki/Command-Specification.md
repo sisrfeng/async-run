@@ -57,14 +57,14 @@ But modifiers are not recommended, because it is evaluated before `:AsyncRun` co
 
 | Option | Default Value | Description |
 |:-|:-:|-|
-| `-auto=?` | `unset` | event name to trigger `QuickFixCmdPre`/`QuickFixCmdPost` [name] autocmd. |
-| `-raw` | `unset` | use raw output if provided, and `&errorformat` will be ignored. |
-| `-strip` | `unset` | remove the heading/trailing messages if provided (omit command and "[Finished in ...]" message). |
+| `-auto=?`        | `unset` | event name to trigger `QuickFixCmdPre`/`QuickFixCmdPost` [name] autocmd. |
+| `-raw`           | `unset` | use raw output if provided, and `&errorformat` will be ignored. |
+| `-strip`         | `unset` | remove the heading/trailing messages if provided (omit command and "[Finished in ...]" message). |
 | `-errorformat=?` | `unset` | errorformat for error matching, if it is unprovided, use current `&errorformat` value. Beware that `%` needs to be escaped into `\%`. |
-| `-silent` | `unset` | provide `-silent` to prevent open quickfix window (will override `g:asyncrun_open` temporarily) |
-| `-scroll=?` | `unset` | set to `0` to prevent quickfix auto-scrolling |
-| `-once=?` | `unset` | set to `1` to buffer output and flush when job is finished, useful when there are multi-line patterns in your `errorformat` |
-| `-encoding=?` | `unset` | specify command encoding independently (overshadow `g:asyncrun_encs`) |
+| `-silent`        | `unset` | provide `-silent` to prevent open quickfix window (will override `g:asyncrun_open` temporarily) |
+| `-scroll=?`      | `unset` | set to `0` to prevent quickfix auto-scrolling |
+| `-once=?`        | `unset` | set to `1` to buffer output and flush when job is finished, useful when there are multi-line patterns in your `errorformat` |
+| `-encoding=?`    | `unset` | specify command encoding independently (overshadow `g:asyncrun_encs`) |
 
 ## Internal Terminal Options
 
